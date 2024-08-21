@@ -1,10 +1,32 @@
-import React from 'react'
+import { useState } from 'react'
 import { SiConsul } from 'react-icons/si'
 import { AiOutlineGlobal } from 'react-icons/ai'
 import { BsPhoneVibrate } from 'react-icons/bs'
 import { CgMenuGridO } from 'react-icons/cg'
+import logo from '../../assets/logo.png'
 
 export default function Navbar() {
+
+    // remove navBar on small screens
+    const [active, setActive] = useState('navBarMenu');
+    const showNavBar = () => {
+        setActive('navBarMenu showNavBar');
+    }
+    const removeNavBar = () => {
+        setActive('navBarMenu');
+    }
+
+    // add bgcolor on second nabVar
+    const [noBg, addBg] = useState('navBarTwo');
+    const addBgColor = () => {
+        if (window.scrollY >= 10) {
+            addBg('navBarTwo navbar_With_Bg');
+        } else {
+            addBg('navBarTwo')
+        }
+    }
+    window.addEventListener('scroll', addBgColor)
+
     return (
         <div className='navBar flex'>
             <div className="navBarOne flex">
