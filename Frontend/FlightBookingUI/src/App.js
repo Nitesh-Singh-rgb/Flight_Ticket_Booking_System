@@ -1,26 +1,24 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
-import Info from "./components/Info/Info";
-import Lounge from "./components/Lounge/Lounge";
-import Navbar from "./components/Navbar/Navbar";
-import Search from "./components/Search/Search";
-import Subscribers from "./components/Subscribers/Subscribers";
-import Support from "./components/Support/Support";
-import Travelers from "./components/Travelers/Travelers";
 
+import Navbar from "./components/Navbar/Navbar";
+
+import Subscribers from "./components/Subscribers/Subscribers";
 
 function App() {
   return (
     <main>
-      <Navbar />
-      <Home />
-      <Search />
-      <Support />
-      <Info />
-      <Lounge />
-      {/* <Travelers /> */}
-      <Subscribers />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Navbar />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+        <Subscribers />
+        <Footer />
+      </BrowserRouter>
+
     </main>
   );
 }
