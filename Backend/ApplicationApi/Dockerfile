@@ -1,9 +1,0 @@
-FROM openjdk:21
-
-ARG JAR_FILE=target/*.jar
-
-COPY ${JAR_FILE} app.jar
-
-EXPOSE 8980
-
-ENTRYPOINT [ "java" , "-jar", "/app.jar" ]
