@@ -9,6 +9,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register.js/Register';
 import NoPage from './components/NoPage/NoPage';
 import Booking from './components/Booking/Booking';
+import Passengers from './components/Passengers/Passengers';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
-            {/* <Route path='booking' element={<Booking />} /> */}
+            <Route path='booking' element={<Booking />} />
+            <Route path='passengers' element={<Passengers />} />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Routes>

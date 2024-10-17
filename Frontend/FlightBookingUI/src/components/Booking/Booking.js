@@ -3,36 +3,47 @@ import BookingService from '../../services/BookingService';
 import { useNavigate } from 'react-router-dom';
 
 export default function Booking(props) {
-    const history = useNavigate()
-    const service = new BookingService()
-    const flag = false;
-    const flight = "";
-    const [state, setState] = useRef([]);
+    const history = useNavigate();
+    const service = new BookingService();
+    const [flag, setflag] = useState(false);
+    const [state, setState] = useState({
+        flightNumber: '',
+        source: '',
+        destination: '',
+        date: '',
+        passengers: [1, 2, 3, 4, 5, 6],
+    });
+    const [numberOfSeatsToBook, setNumberOfSeatsToBook] = useState(1);
+    const flight = useRef(null);
 
     useEffect(() => {
-        if (JSON.parse(localStorage.getItem("plane")) === null) {
-            history("/");
+        try {
+            const flightData = JSON.parse(localStorage.getItem("plane"));
+            if (flightData !== null) {
+                flight.current = flightData;
+                setflag(true);
+                setState({
+                    ...state,
+                    flightNumber: flight.current.flightNumber,
+                    source: flight.current.source,
+                    destination: flight.current.destination,
+                    date: flight.current.travelDate,
+                });
+            } else {
+                history("/"); // Redirect to login or error page if no flight data found
+            }
+        } catch (error) {
+            console.error("Error retrieving flight data:", error);
+            // Handle
         }
-        else {
-            flight = JSON.parse(localStorage.getItem("plane"))
-            flag = true;
-            state = {
-                flightNumber: flight.flightNumber,
-                source: flight.source,
-                destination: flight.destination,
-                date: flight.travelDate,
-                passengers: [1, 2, 3, 4, 5, 6],
-                numberOfSeatsToBook: 1,
-            };
-        }
-    }, [])
+    }, []);
 
 
     useEffect(() => {
         if (!JSON.parse(localStorage.getItem("user"))) {
             history("/login")
         }
-    })
+    }, [history])
 
     const handleInput = (event) => {
         setState({
@@ -41,11 +52,11 @@ export default function Booking(props) {
     };
 
     const goOnPassangers = () => {
-        console.log(state.numberOfSeatsToBook);
-        localStorage.setItem("nop", state.numberOfSeatsToBook);
+        console.log(numberOfSeatsToBook);
+        localStorage.setItem("nop", numberOfSeatsToBook);
         service
             .addBooking(
-                state.numberOfSeatsToBook,
+                numberOfSeatsToBook,
                 state.flightNumber,
                 state.source,
                 state.destination,
@@ -59,10 +70,6 @@ export default function Booking(props) {
                     history("/passengers");
                 }
             });
-    };
-
-    const change = (event) => {
-        setState({ numberOfSeatsToBook: event.target.value });
     };
 
     return (
@@ -79,85 +86,82 @@ export default function Booking(props) {
                             <h6>
                                 <span>Flight Number</span>
                             </h6>
-                            {flag && (
-                                <input
-                                    type='text'
-                                    onChange={handleInput}
-                                    value={state.flightNumber}
-                                    name='flightNumber'
-                                    readOnly
-                                />
-                            )}
+                            <input
+                                type="text"
+                                onChange={handleInput}
+                                value={state.flightNumber}
+                                name="flightNumber"
+                                readOnly
+                                disabled={!flag}
+                            />
                         </div>
                         <div>
                             <h6>
                                 <span>Flying from</span>
                             </h6>
-                            {flag && (
-                                <input
-                                    type='text'
-                                    onChange={handleInput}
-                                    value={state.source}
-                                    name='source'
-                                />
-                            )}
+                            <input
+                                type="text"
+                                onChange={handleInput}
+                                value={state.source}
+                                name="source"
+                                readOnly
+                                disabled={!flag}
+                            />
                         </div>
-                        <div class="form-group">
+                        <div>
                             <h6>
-                                <span class="form-label">Flying to</span>
+                                <span>Flying to</span>
                             </h6>
-                            {flag && (
-                                <input
-                                    class="form-control"
-                                    type="text"
-                                    onChange={handleInput}
-                                    value={state.destination}
-                                    name="destination"
-                                    readOnly
-                                />
-                            )}
+                            <input
+                                type="text"
+                                onChange={handleInput}
+                                value={state.destination}
+                                name="destination"
+                                readOnly
+                                disabled={!flag}
+                            />
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <span class="form-label">Departing</span>
-                                    {flag && (
-                                        <input
-                                            onChange={handleInput}
-                                            value={state.date}
-                                            class="form-control"
-                                            disabled
-                                        />
-                                    )}
-                                </div>
-                            </div>
+                        <div>
+                            <h6>
+                                <span>Departing</span>
+                            </h6>
+                            <input
+                                type="text"
+                                onChange={handleInput}
+                                value={state.date}
+                                name="date"
+                                readOnly
+                                disabled={!flag}
+                            />
                         </div>
-                        {/* <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <span class="form-label">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <span className="form-label">
                                         Number of Passenger
                                     </span>
-                                    {flag && (
-                                        <select
-                                            class="form-control"
-                                            onChange={change}
-                                            value={state.numberOfSeatsToBook}
-                                        >
-                                            {state.passengers.map((psng) => (
-                                                <option value={psng}>{psng}</option>
-                                            ))}
-                                        </select>
-                                    )}
-                                    <span class="select-arrow"></span>
+                                    {flag && (state.passengers && state.passengers.length > 0) && (
+                                        < select
+                                            className="form-control"
+                                            onChange={e => setNumberOfSeatsToBook(e.target.value)}
+                                            value={numberOfSeatsToBook}
+                                        >{
+
+                                                state.passengers.map((psng) => (
+                                                    <option key={psng} value={psng}>{psng}</option>
+                                                ))
+                                            }
+                                        </select>)
+                                    }
+                                    <span className="select-arrow"></span>
                                 </div>
                             </div>
-                        </div> */}
-                        <div class="card-footer">
+                        </div>
+                        <div className="card-footer">
                             <button
                                 onClick={goOnPassangers}
                                 type="button"
-                                class="subscribe btn btn-primary btn-block shadow-sm"
+                                className="subscribe btn btn-primary btn-block shadow-sm"
                             >
                                 {" "}
                                 Book Ticket
@@ -166,8 +170,8 @@ export default function Booking(props) {
                     </form>
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

@@ -6,8 +6,10 @@ import './flightlist.css';
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function FlightList(props) {
+    const history = useNavigate();
     const [flights, setFlights] = useState(null);
     const [selectedflight, setSelectedflight] = useState(null);
 
@@ -15,6 +17,9 @@ export default function FlightList(props) {
         setFlights(() => props.flights)
         Aos.init({ duration: 2000 })
     }, []);
+
+
+
 
     const header = (
         <h4>Scheduled flight</h4>
@@ -24,8 +29,9 @@ export default function FlightList(props) {
         <footer style={{ textAlign: 'left', fontSize: '90%', fontStyle: 'italic' }}>In total there are {flights ? flights.length : 0} Flights.</footer>
     );
 
-    const onRowSelect = (event) => {
-        console.log(event.data)
+    const onRowSelect = (flight) => {
+        localStorage.setItem("plane", JSON.stringify(flight.data));
+        history('/booking');
     }
 
     if (!flights) {

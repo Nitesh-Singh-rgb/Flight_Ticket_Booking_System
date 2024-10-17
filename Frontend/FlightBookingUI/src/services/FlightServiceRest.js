@@ -1,7 +1,7 @@
 
 export default class FlightServiceRest {
     constructor() {
-        this.uri = "http://localhost:5000/flight";
+        this.uri = "http://localhost:8980/flight";
         this.flights = [];
     }
 
