@@ -2,34 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BookingService from '../../services/BookingService';
 import * as Yup from 'yup';
+import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 
-const passengerSchema = Yup.object().shape(
-    {
-        pname: Yup.string().min(3).required('Name is required'),
-        gender: Yup.string().notOneOf(['Select'], 'Please select a gender').required('Gender is required'),
-        age: Yup.number().required('Age is required').positive('Age must be a positive number').integer('Age must be an integer')
-    }
-);
+const passengerSchema = Yup.object().shape({
+    elements: Yup.array().of(
+        Yup.object().shape({
+            pname: Yup.string().min(3).required('Name is required'),
+            gender: Yup.string().notOneOf(['Select'], 'Please select a gender').required('Gender is required'),
+            age: Yup.number().required('Age is required').positive('Age must be a positive number').integer('Age must be an integer').max(100, 'Plz! Enter valid age')
+        })
+    )
+});
 
 export default function Passengers() {
 
-    const [npsgn, setNpsgn] = useState(parseInt(localStorage.getItem("nop")));
-    const [values, setValues] = useState([]);
-    const [info, setInfo] = useState(false);
-    const [btn, setBtn] = useState(false);
-    const [gen, setGen] = useState(['Select', 'Male', 'Female', 'Other']);
+    const npsgn = localStorage.getItem("nop") ? parseInt(localStorage.getItem("nop")) : 1;
     const service = new BookingService();
     const history = useNavigate();
-    const [state, setState] = useState({
-        npsgn: !localStorage.getItem("nop") ? 1 : parseInt(localStorage.getItem("nop")),
-        pname: '',
-        gen: ['Select', 'Male', 'Female', 'Other'],
-        gender: '',
-        age: '',
-        id: 1,
-        btn: false,
-        info: false
-    });
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -37,65 +26,12 @@ export default function Passengers() {
         }
     }, []);
 
-    const areFieldsFilled = () => {
-        return state.pname !== '' && state.gender !== 'Select' && state.age !== '';
-    }
-
-    const handleClick = (idx) => {
-        setValues([...values, { id: values.length + 1, pname: values.pname, gender: values.gender, age: values.age }]);
-        setInfo(true);
-        if (values.length === npsgn && !areFieldsFilled()) {
-            setBtn(true);
-        }
-    };
-
-    const fieldArray = Array.from({ length: npsgn }, (_, i) => (
-        <tr key={i}>
-            <td>
-                <input
-                    type='text'
-                    name='pname'
-                    onChange={(e) => {
-                        setValues([...values, { ...values[i], pname: e.target.value }]);
-                        setInfo(false);
-                    }}
-                />
-            </td>
-            <td>
-                <select name='gender' onChange={(e) => {
-                    setValues([...values, { ...values[i], gender: e.target.value }]);
-                }}>
-                    {gen.map((g) => (
-                        <option key={g} value={g}>{g}</option>
-                    ))}
-                </select>
-            </td>
-            <td>
-                <input
-                    type='text'
-                    name='age'
-                    onChange={(e) => {
-                        setValues([...values, { ...values[i], age: e.target.value }]);
-                    }}
-                    maxLength="2"
-                />
-            </td>
-            <td align='center'>
-                <button
-                    disabled={btn || areFieldsFilled()}
-                    onClick={() => handleClick(i)}
-                >
-                    Add Passenger
-                </button>
-            </td>
-        </tr>
-    ));
-
-
-    const savePassenger = () => {
-        console.log("Values save: ", values);
-        localStorage.setItem('sid', JSON.stringify(values));
-        service.addPassengers({ "pass1": values })
+    const savePassenger = (v) => {
+        // console.log(v);
+        // setValues(v.elements);
+        // console.log("Values save: ", values);
+        localStorage.setItem('sid', JSON.stringify(v.elements));
+        service.addPassengers({ "pass1": v.elements })
             .then(() => history("/summary"));
     };
 
@@ -108,32 +44,63 @@ export default function Passengers() {
                 <div>
                     <div>
                         <div>
-                            <strong>Note: </strong> Please add passengers individually
-                        </div>
-                        <div>
                             <div>
-                                {state.info && <div>
-                                    <strong>Success!</strong>&nbsp; Passenger added with name : &nbsp; {state.pname}
-                                </div>}
                                 <div>
-                                    <form>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Age</th>
-                                                    <th>Add Passenger</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {fieldArray}
-                                            </tbody>
-                                        </table>
-                                        <div>
-                                            <button className='btn' onClick={savePassenger} type='button'>Book Ticket</button>
-                                        </div>
-                                    </form>
+                                    <Formik
+                                        initialValues={{
+                                            elements: Array(npsgn).fill({
+                                                id: '',
+                                                pname: '',
+                                                gender: 'Male',
+                                                age: ''
+                                            })
+                                        }}
+                                        validationSchema={passengerSchema}
+                                        onSubmit={savePassenger}
+                                    >
+                                        {
+                                            ({ values }) => (
+                                                <Form>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th> </th>
+                                                                <th>Name</th>
+                                                                <th>Gender</th>
+                                                                <th>Age</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <FieldArray
+                                                            name='elements'
+                                                            render={arrayHelpers => (
+                                                                <tbody>
+                                                                    {values.elements && values.elements.length > 0 ? (
+                                                                        values.elements.map((elements, index) => (
+                                                                            <tr key={index}>
+                                                                                {elements.id = index + 1}
+                                                                                <td><Field name={`elements[${index}].pname`} type="text" /><ErrorMessage name={`elements[${index}].pname`} component="div" /></td>
+                                                                                <td><Field name={`elements[${index}].gender`} as="select">
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                    <option value="Other">Other</option>
+                                                                                </Field>
+                                                                                    <ErrorMessage name={`elements[${index}].gender`} component="div" /></td>
+                                                                                <td><Field name={`elements[${index}].age`} type="number" /><ErrorMessage name={`elements[${index}].age`} component="div" /></td>
+                                                                            </tr>
+                                                                        ))
+                                                                    ) : (<div>No Passenger</div>)
+                                                                    }</tbody>)
+                                                            }
+                                                        />
+
+
+                                                    </table>
+                                                    <button type='submit' className='btn'>Book Ticket</button>
+                                                </Form>
+                                            )
+                                        }
+                                    </Formik>
                                     {/* <div className="modal fade" id="myModal">
                                         <div className="modal-dialog modal-dialog-centered">
                                             <div className="modal-content">

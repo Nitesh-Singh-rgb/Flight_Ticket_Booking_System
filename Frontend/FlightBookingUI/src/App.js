@@ -12,6 +12,8 @@ import Summary from './components/Summary/Summary';
 import Payment from './components/Payment/Payment';
 import Ticket from './components/Ticket/Ticket';
 
+
+
 function App() {
   return (
     <main>
