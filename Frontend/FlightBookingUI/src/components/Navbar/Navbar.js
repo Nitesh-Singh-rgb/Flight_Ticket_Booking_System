@@ -7,9 +7,10 @@ import logo from '../../assets/logo.png'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import Subscribers from '../Subscribers/Subscribers'
 import Footer from '../Footer/Footer'
+import { Button } from 'primereact/button'
+import { Avatar } from 'primereact/avatar'
 
 export default function Navbar() {
-
     const history = useNavigate();
 
     // remove navBar on small screens
@@ -32,19 +33,16 @@ export default function Navbar() {
     }
     window.addEventListener('scroll', addBgColor)
 
-    const userClear = () => (
-        localStorage.removeItem("user"),
-        localStorage.removeItem("plane"),
-        localStorage.removeItem("bid"),
-        localStorage.removeItem("sid"),
-        localStorage.removeItem("tickets"),
-        localStorage.removeItem("nop"),
-        localStorage.removeItem("ticket"),
-        localStorage.clear()
-    );
-
-    const onTickets = () => {
-        history('/ticket')
+    const userClear = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("plane");
+        localStorage.removeItem("bid");
+        localStorage.removeItem("sid")
+        localStorage.removeItem("tickets");
+        localStorage.removeItem("nop");
+        localStorage.removeItem("ticket");
+        localStorage.clear();
+        history("/");
     };
 
     const loggedIn = (
@@ -101,7 +99,13 @@ export default function Navbar() {
                 </div>
 
                 <div className="atb flex">
-                    <span></span>
+                    
+                    {localStorage.getItem("user") && (
+                        <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                            <Avatar image="https://unsplash.it/32" shape='circle' />
+                            <span>{JSON.parse(localStorage.getItem("user")).username}</span>
+                        </span>
+                    )}
                     <span>
                         <Link to="/">
                             <button className='btn flex btnTwo' onClick={userClear}>Sign Out</button>
@@ -119,9 +123,21 @@ export default function Navbar() {
                     <ul className="menu flex">
                         <li onClick={removeNavBar} className="listItem"><Link to="/">Home</Link></li>
                         <li onClick={removeNavBar} className="listItem">About</li>
-                        <li onClick={removeNavBar} className="listItem">Offers</li>
-                        <li onClick={removeNavBar} className="listItem">Seats</li>
-                        <li onClick={removeNavBar} className="listItem">Destinations</li>
+                        <li onClick={removeNavBar} className="listItem">
+                            {localStorage.getItem("user") && (
+                                <Link to="/tickets">Booking History</Link>
+                            )}
+                        </li>
+                        {localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")).isadmin === 1 && (
+                            <li onClick={removeNavBar} className="listItem">
+                                <Link to="/allFlights">All Flights</Link>
+                            </li>
+                        )}
+                        {localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")).isadmin === 1 && (
+                            <li onClick={removeNavBar} className='listItem'>
+                                <Link to="/admin"><Button outlined>Admin</Button></Link>
+                            </li>
+                        )}
                     </ul>
                     <button className='btn flex btnOne'>Contact</button>
 

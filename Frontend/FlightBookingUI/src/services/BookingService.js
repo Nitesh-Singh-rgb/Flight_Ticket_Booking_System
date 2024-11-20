@@ -62,9 +62,9 @@ export default class BookingService {
 
     async getTickets() {
         const uid = JSON.parse(localStorage.getItem("user")).userId;
-        return await axios.get(this.url + "/getTicket/" + uid)
+        return await axios.get(this.url + "/getTickets/" + uid)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 return response;
             });
     }

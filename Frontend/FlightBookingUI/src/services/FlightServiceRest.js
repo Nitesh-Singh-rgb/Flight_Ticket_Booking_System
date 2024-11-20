@@ -42,6 +42,36 @@ export default class FlightServiceRest {
             });
     }
 
+    async updateFlight(flight) {
+        return await fetch(this.uri + "/update", {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(flight)
+        })
+            .catch((error) => {
+                console.log("Error: " + error.message);
+            });
+    }
+
+    async deleteFlight(fid) {
+        return await fetch(this.uri + "/remove/" + fid, {
+            method: "DELETE",
+            mode: "cors",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    this.handleResponseError(response);
+                }
+                return response.json();
+            })
+            .catch((error) => {
+                console.log("Error : " + error.message);
+            });
+    }
+
     async getFlightsForUser(source, destination, date) {
         return await fetch(
             this.uri +

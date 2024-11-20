@@ -1,6 +1,8 @@
 import React, { Component, useEffect, useRef, useState } from 'react'
 import BookingService from '../../services/BookingService';
 import { useNavigate } from 'react-router-dom';
+import booking from './Booking.module.css';
+
 
 export default function Booking(props) {
     const history = useNavigate();
@@ -73,19 +75,17 @@ export default function Booking(props) {
     };
 
     return (
-        <div className='home'>
-            <div>
-                <div>
-                    <div>
-                        <h1>Book My Flight</h1>
-                    </div>
+        <div className={booking.booking_main}>
+            <div className={booking.booking_container}>
+                <div className={booking.form_title}>
+                    <h1>Book your tickets</h1>
                 </div>
                 <div>
                     <form>
                         <div>
-                            <h6>
-                                <span>Flight Number</span>
-                            </h6>
+                            <label htmlFor='flightNumber'>
+                                Flight Number
+                            </label>
                             <input
                                 type="text"
                                 onChange={handleInput}
@@ -96,7 +96,7 @@ export default function Booking(props) {
                             />
                         </div>
                         <div>
-                            <h6>
+                            <h6 className='hih'>
                                 <span>Flying from</span>
                             </h6>
                             <input
