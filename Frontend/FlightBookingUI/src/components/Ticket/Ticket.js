@@ -97,109 +97,115 @@ export default function Ticket() {
     });
 
     return (
-        <div style={{ height: '700px', paddingTop: '300px' }}>
-            <div>
-                <button onClick={reactToPrintfn}>
-                    Print The Ticket
-                </button>
-            </div>
-            <div>
-                <button onClick={onMail}>
-                    Mail My Ticket
-                </button>
-            </div>
-            <div className={printstyle.box} ref={contentRef}>
-                <div className={printstyle.ticket}>
-                    <span className={printstyle.airline}>BookMyFlight.com</span>
-                    <span className={printstyle.boarding}>
-                        Boarding: {ticket?.booking?.flight?.source}
-                    </span>
-                    <div className={printstyle.content}>
-                        <span className={printstyle.jfk}>{ticket?.booking?.flight?.source}</span>
-                        <span className={printstyle.plane}>
-                            <svg
-                                clipRule="evenodd"
-                                fillRule='evenodd'
-                                height='60'
-                                width='60'
-                                imageRendering='optimizeQuality'
-                                shapeRendering='geometricPrecision'
-                                textRendering='geometricPrecision'
-                                viewBox='0 0 500 500'
-                                xmlns='http://www.w3.org/2000/svg'
-                            >
-                                <g stroke='#222'>
-                                    <line
-                                        fill='none'
-                                        strokeLinecap='round'
-                                        strokeWidth='30'
-                                        x1='300'
-                                        x2='55'
-                                        y1='390'
-                                        y2='390'
-                                    />
-                                    <path
-                                        d='M98 325c-9 10 10 16 25 6l311-156c24-17 35-25 42-50 2-15-46-11-78-7-15 1-34 10-42 16l-56 35 1-1-169-31c-14-3-24-5-37-1-10 5-18 10-27 18l122 72c4 3 5 7 1 9l-44 27-75-15c-10-2-18-4-28 0-8 4-14 9-20 15l74 63z'
-                                        fill='#222'
-                                        strokeLinejoin='round'
-                                        strokeWidth='10'
-                                    />
-                                </g>
-                            </svg>
-                        </span>
-                        <span className={printstyle.sfo}>
-                            {ticket?.booking?.flight?.destination}
-                        </span>
-                        <div className={printstyle.subContent}>
-                            <span className={printstyle.watermark}>BookMyFlight</span>
-                            <span className={printstyle.name}>
-                                Passenger Name
-                                <br />
-                                {psg_name}
+        <div className={printstyle.main}>
+            <div className={printstyle.container}>
+                <div className={printstyle.btn_element}>
+                    <div>
+                        <button onClick={reactToPrintfn} className='btn'>
+                            Print The Ticket
+                        </button>
+                    </div>
+                    <div>
+                        <button onClick={onMail} className='btn'>
+                            Mail My Ticket
+                        </button>
+                    </div>
+                </div>
+                <div style={{ padding: '12px' }}>
+                    <div className={printstyle.box} ref={contentRef}>
+                        <div className={printstyle.ticket}>
+                            <span className={printstyle.airline}>BookMyFlight.com</span>
+                            <span className={printstyle.boarding}>
+                                Boarding: {ticket?.booking?.flight?.source}
                             </span>
-                            <span className={printstyle.age}>
-                                Passenger Age
-                                <br />
-                                {psg_age}
-                            </span>
-                            <span className={printstyle.gender}>
-                                Passenger Gender
-                                <br />
-                                {psg_gender}
-                            </span>
-                            <span className={printstyle.flight}>
-                                Flight No.&deg;
-                                <br />
-                                <span>{ticket?.booking?.flight?.flightNumber}</span>{" "}
-                                <br />
-                            </span>
-                            <span className={printstyle.gate}>
-                                Ticket No.&deg; <br />
-                                <span>{ticket?.ticketNumber}</span>
-                            </span>
-                            <span className={printstyle.amount}>
-                                Amount Paid
-                                <br />
-                                <span>₹{ticket?.total_pay}</span><br />
-                            </span>
-                            <span className={printstyle.boardingtime}>
-                                Departure Time
-                                <br />
-                                <span>{ticket?.booking?.flight?.arrivalTime}</span>
-                            </span>
-                            <span className={printstyle.traveldate}>
-                                Travel Date
-                                <br />
-                                <span>{ticket?.booking?.flight?.travelDate}</span>
-                            </span>
-                            <span className={printstyle.departuretime}>
-                                Arrival Time
-                                <br />
-                                <span>{ticket?.booking?.flight?.departureTime}</span>
-                            </span>
+                            <div className={printstyle.content}>
+                                <span className={printstyle.jfk}>{ticket?.booking?.flight?.source}</span>
+                                <span className={printstyle.plane}>
+                                    <svg
+                                        clipRule="evenodd"
+                                        fillRule='evenodd'
+                                        height='60'
+                                        width='60'
+                                        imageRendering='optimizeQuality'
+                                        shapeRendering='geometricPrecision'
+                                        textRendering='geometricPrecision'
+                                        viewBox='0 0 500 500'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <g stroke='#222'>
+                                            <line
+                                                fill='none'
+                                                strokeLinecap='round'
+                                                strokeWidth='30'
+                                                x1='300'
+                                                x2='55'
+                                                y1='390'
+                                                y2='390'
+                                            />
+                                            <path
+                                                d='M98 325c-9 10 10 16 25 6l311-156c24-17 35-25 42-50 2-15-46-11-78-7-15 1-34 10-42 16l-56 35 1-1-169-31c-14-3-24-5-37-1-10 5-18 10-27 18l122 72c4 3 5 7 1 9l-44 27-75-15c-10-2-18-4-28 0-8 4-14 9-20 15l74 63z'
+                                                fill='#222'
+                                                strokeLinejoin='round'
+                                                strokeWidth='10'
+                                            />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span className={printstyle.sfo}>
+                                    {ticket?.booking?.flight?.destination}
+                                </span>
+                                <div className={printstyle.subContent}>
+                                    <span className={printstyle.watermark}>BookMyFlight</span>
+                                    <span className={printstyle.name}>
+                                        Passenger Name
+                                        <br />
+                                        {psg_name}
+                                    </span>
+                                    <span className={printstyle.age}>
+                                        Passenger Age
+                                        <br />
+                                        {psg_age}
+                                    </span>
+                                    <span className={printstyle.gender}>
+                                        Passenger Gender
+                                        <br />
+                                        {psg_gender}
+                                    </span>
+                                    <span className={printstyle.flight}>
+                                        Flight No.&deg;
+                                        <br />
+                                        <span>{ticket?.booking?.flight?.flightNumber}</span>{" "}
+                                        <br />
+                                    </span>
+                                    <span className={printstyle.gate}>
+                                        Ticket No.&deg; <br />
+                                        <span>{ticket?.ticketNumber}</span>
+                                    </span>
+                                    <span className={printstyle.amount}>
+                                        Amount Paid
+                                        <br />
+                                        <span>₹{ticket?.total_pay}</span><br />
+                                    </span>
+                                    <span className={printstyle.boardingtime}>
+                                        Departure Time
+                                        <br />
+                                        <span>{ticket?.booking?.flight?.arrivalTime}</span>
+                                    </span>
+                                    <span className={printstyle.traveldate}>
+                                        Travel Date
+                                        <br />
+                                        <span>{ticket?.booking?.flight?.travelDate}</span>
+                                    </span>
+                                    <span className={printstyle.departuretime}>
+                                        Arrival Time
+                                        <br />
+                                        <span>{ticket?.booking?.flight?.departureTime}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className={printstyle.barcode}></div>
                         </div>
                     </div>
-                    <div className={printstyle.barcode}></div>
                 </div>
             </div>
         </div>

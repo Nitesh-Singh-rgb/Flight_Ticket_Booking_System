@@ -1,0 +1,44 @@
+.main {
+    padding-top: 12rem;
+    margin-bottom: 2rem;
+}
+
+.h4 {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid hsl(225, 50%, 48%);
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.table caption {
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: .5em;
+}
+
+.footer {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}

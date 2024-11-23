@@ -1,0 +1,62 @@
+.register_main {
+    padding-top: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register_container {
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.my_label {
+    margin-bottom: 2px;
+    font-size: 12px;
+    padding-right: 100%;
+    white-space: nowrap;
+}
+
+.space {
+    margin-bottom: 11px;
+}
+
+.error_msg {
+    font-size: 11px;
+    color: red;
+}
+
+.form_control {
+    width: 100%;
+    padding: 5px;
+    /* margin-bottom: 10px; */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.register_link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.register_link a {
+    color: hsl(225, 50%, 48%);
+    text-decoration: none;
+}
+
+.register_link a:hover {
+    text-decoration: underline;
+}

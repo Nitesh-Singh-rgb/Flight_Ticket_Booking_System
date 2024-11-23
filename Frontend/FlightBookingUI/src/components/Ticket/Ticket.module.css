@@ -1,8 +1,31 @@
+.main {
+    padding-top: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10rem;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 4rem;
+    flex-wrap: wrap-reverse;
+}
+
+.btn_element {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .box {
-    position: absolute;
-    top: -webkit-calc(35% - 125px);
+    position: relative;
+    /* top: -webkit-calc(35% - 125px);
     left: calc(50% - 300px);
-    left: -webkit-calc(50%);
+    left: -webkit-calc(50%); */
 }
 
 .ticket {

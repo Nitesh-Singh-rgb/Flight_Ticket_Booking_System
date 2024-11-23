@@ -2,6 +2,7 @@ import React, { Component, useEffect, useRef, useState } from 'react'
 import BookingService from '../../services/BookingService';
 import { useNavigate } from 'react-router-dom';
 import booking from './Booking.module.css';
+import Aos from 'aos';
 
 
 export default function Booking(props) {
@@ -38,6 +39,7 @@ export default function Booking(props) {
             console.error("Error retrieving flight data:", error);
             // Handle
         }
+        Aos.init({ duration: 2000 });
     }, []);
 
 
@@ -76,14 +78,14 @@ export default function Booking(props) {
 
     return (
         <div className={booking.booking_main}>
-            <div className={booking.booking_container}>
-                <div className={booking.form_title}>
-                    <h1>Book your tickets</h1>
+            <div className={booking.booking_container} data-aos-duration='2000' data-aos="fade-up">
+                <div >
+                    <h1 className={booking.form_title}>Book your tickets</h1>
                 </div>
                 <div>
-                    <form>
+                    <form className={booking.form} >
                         <div>
-                            <label htmlFor='flightNumber'>
+                            <label htmlFor='flightNumber' className={booking.my_label}>
                                 Flight Number
                             </label>
                             <input
@@ -96,9 +98,9 @@ export default function Booking(props) {
                             />
                         </div>
                         <div>
-                            <h6 className='hih'>
-                                <span>Flying from</span>
-                            </h6>
+                            <label htmlFor='source' className={booking.my_label}>
+                                Flying from
+                            </label>
                             <input
                                 type="text"
                                 onChange={handleInput}
@@ -109,9 +111,9 @@ export default function Booking(props) {
                             />
                         </div>
                         <div>
-                            <h6>
-                                <span>Flying to</span>
-                            </h6>
+                            <label htmlFor='destination' className={booking.my_label}>
+                                Flying to
+                            </label>
                             <input
                                 type="text"
                                 onChange={handleInput}
@@ -122,9 +124,9 @@ export default function Booking(props) {
                             />
                         </div>
                         <div>
-                            <h6>
-                                <span>Departing</span>
-                            </h6>
+                            <label htmlFor='date' className={booking.my_label}>
+                                Departing
+                            </label>
                             <input
                                 type="text"
                                 onChange={handleInput}
@@ -137,11 +139,12 @@ export default function Booking(props) {
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <span className="form-label">
+                                    <label htmlFor='noOfPsg' className={booking.my_label}>
                                         Number of Passenger
-                                    </span>
+                                    </label>
                                     {flag && (state.passengers && state.passengers.length > 0) && (
                                         < select
+                                            name='noOfPsg'
                                             className="form-control"
                                             onChange={e => setNumberOfSeatsToBook(e.target.value)}
                                             value={numberOfSeatsToBook}
@@ -161,7 +164,7 @@ export default function Booking(props) {
                             <button
                                 onClick={goOnPassangers}
                                 type="button"
-                                className="subscribe btn btn-primary btn-block shadow-sm"
+                                className={booking.btn}
                             >
                                 {" "}
                                 Book Ticket

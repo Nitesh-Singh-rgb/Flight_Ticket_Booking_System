@@ -1,0 +1,59 @@
+.main {
+    padding-top: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    margin-bottom: 10rem;
+}
+
+.container h4 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+    border-bottom: 2px solid hsl(225, 50%, 48%);
+}
+
+.card_icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding-bottom: 20px;
+}
+
+.card_icons img {}
+
+.text_bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error_msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+.my_label {
+    margin-bottom: 5px;
+    font-size: 13px;
+    padding-right: 100%;
+    white-space: nowrap;
+}
