@@ -4,7 +4,7 @@ import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Subscribers from "./components/Subscribers/Subscribers";
 import Login from './components/Login/Login';
-import Register from './components/Register.js/Register';
+import Register from './components/Register/Register';
 import NoPage from './components/NoPage/NoPage';
 import Booking from './components/Booking/Booking';
 import Passengers from './components/Passengers/Passengers';
