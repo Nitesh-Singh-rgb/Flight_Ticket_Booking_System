@@ -57,6 +57,6 @@
     "picomatch": "^4.0.4",
     "underscore": "1.13.8",
     "serialize-javascript": "^7.0.5",
-    "webpack-dev-server": "^5.2.1"
+    "@tootallnate/once": "^3.0.1"
   }
 }
